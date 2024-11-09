@@ -1,0 +1,232 @@
+{
+  "last_node_id": 7,
+  "last_link_id": 6,
+  "nodes": [
+    {
+      "id": 6,
+      "type": "DownloadAndLoadFlorence2Model",
+      "pos": {
+        "0": -295,
+        "1": 975
+      },
+      "size": {
+        "0": 365.4000244140625,
+        "1": 106
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "lora",
+          "type": "PEFTLORA",
+          "link": null,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "florence2_model",
+          "type": "FL2MODEL",
+          "links": [
+            5
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DownloadAndLoadFlorence2Model"
+      },
+      "widgets_values": [
+        "gokaygokay/Florence-2-Flux-Large",
+        "fp32",
+        "sdpa"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "Florence2Run",
+      "pos": {
+        "0": 267,
+        "1": 826
+      },
+      "size": {
+        "0": 400,
+        "1": 352
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 4
+        },
+        {
+          "name": "florence2_model",
+          "type": "FL2MODEL",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "caption",
+          "type": "STRING",
+          "links": [
+            6
+          ],
+          "slot_index": 2
+        },
+        {
+          "name": "data",
+          "type": "JSON",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Florence2Run"
+      },
+      "widgets_values": [
+        "",
+        "dense_region_caption",
+        true,
+        false,
+        1024,
+        3,
+        true,
+        "",
+        1009626973801861,
+        "randomize",
+        true
+      ]
+    },
+    {
+      "id": 7,
+      "type": "ShowText|pysssss",
+      "pos": {
+        "0": 840,
+        "1": 807
+      },
+      "size": {
+        "0": 417.0567321777344,
+        "1": 382.5307922363281
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 6,
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": null,
+          "shape": 6
+        }
+      ],
+      "title": "CaptionAPI",
+      "properties": {
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "widgets_values": [
+        "",
+        "A man in a brown suit sitting on a black chair with a red book in his lap.<loc_44><loc_208><loc_802><loc_992>A man sitting on top of a black metal chair with his legs crossed. He is wearing a dark brown suit jacket over a beige shirt. The suit jacket has a single button on the left side of his chest. The shirt has a light brown color and the sleeves are slightly rolled up. The man is holding the red book with both hands. The chair has a black leather seat and metal legs. The floor is covered in a patterned rug with a floral design. The background is blurred but appears to be a room with a large window. \n\nThe man is sitting in front of a large floral arrangement. The flowers in the arrangement are in shades of pink, orange, and yellow. The arrangement is made up of different types of flowers, including roses, daisies, and lilies. There is also a white lampshade in the corner of the room. The lighting is soft and warm. The overall mood of the image is peaceful and serene."
+      ]
+    },
+    {
+      "id": 3,
+      "type": "LoadImage",
+      "pos": {
+        "0": -375,
+        "1": 404
+      },
+      "size": {
+        "0": 315,
+        "1": 314
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            4
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "ImgSrcAPI",
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "APY_240426-27_LE_GRAMME_00010_0002 3_INF_00001_.png",
+        "image"
+      ]
+    }
+  ],
+  "links": [
+    [
+      4,
+      3,
+      0,
+      5,
+      0,
+      "IMAGE"
+    ],
+    [
+      5,
+      6,
+      0,
+      5,
+      1,
+      "FL2MODEL"
+    ],
+    [
+      6,
+      5,
+      2,
+      7,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7247295000000008,
+      "offset": [
+        1524.8754884056618,
+        -13.002648294071683
+      ]
+    }
+  },
+  "version": 0.4
+}

@@ -1,0 +1,926 @@
+{
+  "23": {
+    "inputs": {
+      "text": "",
+      "speak_and_recognation": true,
+      "clip": [
+        "106",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "NegativePromptAPI"
+    }
+  },
+  "25": {
+    "inputs": {
+      "text_input": [
+        "174",
+        0
+      ],
+      "task": "caption_to_phrase_grounding",
+      "fill_mask": true,
+      "keep_model_loaded": false,
+      "max_new_tokens": 1024,
+      "num_beams": 3,
+      "do_sample": true,
+      "output_mask_select": "",
+      "seed": 42,
+      "speak_and_recognation": true,
+      "image": [
+        "179",
+        0
+      ],
+      "florence2_model": [
+        "52",
+        0
+      ]
+    },
+    "class_type": "Florence2Run",
+    "_meta": {
+      "title": "Florence2Run"
+    }
+  },
+  "27": {
+    "inputs": {
+      "images": [
+        "25",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "28": {
+    "inputs": {
+      "model": "sam2.1_hiera_base_plus.safetensors",
+      "segmentor": "single_image",
+      "device": "cuda",
+      "precision": "fp32"
+    },
+    "class_type": "DownloadAndLoadSAM2Model",
+    "_meta": {
+      "title": "(Down)Load SAM2Model"
+    }
+  },
+  "29": {
+    "inputs": {
+      "keep_model_loaded": true,
+      "individual_objects": false,
+      "sam2_model": [
+        "28",
+        0
+      ],
+      "image": [
+        "179",
+        0
+      ],
+      "bboxes": [
+        "30",
+        1
+      ]
+    },
+    "class_type": "Sam2Segmentation",
+    "_meta": {
+      "title": "Sam2Segmentation"
+    }
+  },
+  "30": {
+    "inputs": {
+      "index": "0",
+      "batch": false,
+      "data": [
+        "25",
+        3
+      ]
+    },
+    "class_type": "Florence2toCoordinates",
+    "_meta": {
+      "title": "Florence2 Coordinates"
+    }
+  },
+  "31": {
+    "inputs": {
+      "mask_opacity": 0.8,
+      "mask_color": "100, 15, 240",
+      "pass_through": false,
+      "image": [
+        "179",
+        0
+      ],
+      "mask": [
+        "29",
+        0
+      ]
+    },
+    "class_type": "ImageAndMaskPreview",
+    "_meta": {
+      "title": "ImageAndMaskPreview"
+    }
+  },
+  "35": {
+    "inputs": {
+      "unet_name": "flux1-dev-fp8.safetensors",
+      "weight_dtype": "fp8_e4m3fn_fast"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "36": {
+    "inputs": {
+      "clip_name1": "t5xxl_fp8_e4m3fn.safetensors",
+      "clip_name2": "ViT-L-14-TEXT-detail-improved-hiT-GmP-HF.safetensors",
+      "type": "flux"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "37": {
+    "inputs": {
+      "vae_name": "Flux.1_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "51": {
+    "inputs": {
+      "guidance": 5,
+      "conditioning": [
+        "75",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "FluxGuidance"
+    }
+  },
+  "52": {
+    "inputs": {
+      "model": "microsoft/Florence-2-large-ft",
+      "precision": "fp32",
+      "attention": "sdpa"
+    },
+    "class_type": "DownloadAndLoadFlorence2Model",
+    "_meta": {
+      "title": "DownloadAndLoadFlorence2Model"
+    }
+  },
+  "55": {
+    "inputs": {
+      "max_shift": 1,
+      "base_shift": 0.5,
+      "width": 1024,
+      "height": 1024,
+      "model": [
+        "187",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingFlux",
+    "_meta": {
+      "title": "ModelSamplingFlux"
+    }
+  },
+  "59": {
+    "inputs": {
+      "lora_name": "Flux\\Hyper\\FLUX.1-Turbo-Alpha.safetensors",
+      "strength_model": 1,
+      "model": [
+        "106",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
+  },
+  "61": {
+    "inputs": {
+      "rgthree_comparer": {
+        "images": [
+          {
+            "name": "A",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_schyr_00063_.png&type=temp&subfolder=&rand=0.526737054521792"
+          },
+          {
+            "name": "B",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_schyr_00064_.png&type=temp&subfolder=&rand=0.9186216923297504"
+          }
+        ]
+      },
+      "image_a": [
+        "100",
+        0
+      ],
+      "image_b": [
+        "179",
+        0
+      ]
+    },
+    "class_type": "Image Comparer (rgthree)",
+    "_meta": {
+      "title": "Image Comparer (rgthree)"
+    }
+  },
+  "63": {
+    "inputs": {
+      "strength": 0.2,
+      "start_percent": 0,
+      "end_percent": 0.3,
+      "positive": [
+        "51",
+        0
+      ],
+      "negative": [
+        "23",
+        0
+      ],
+      "control_net": [
+        "237",
+        0
+      ],
+      "image": [
+        "67",
+        0
+      ],
+      "vae": [
+        "37",
+        0
+      ]
+    },
+    "class_type": "ControlNetApplyAdvanced",
+    "_meta": {
+      "title": "CtrlNetAAPI"
+    }
+  },
+  "67": {
+    "inputs": {
+      "preprocessor": "DepthAnythingV2Preprocessor",
+      "resolution": 1024,
+      "image": [
+        "99",
+        1
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "68": {
+    "inputs": {
+      "control_net_name": "FLUX.1\\flux_shakker_labs_union_pro-fp8_e4m3fn.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "69": {
+    "inputs": {
+      "images": [
+        "67",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "70": {
+    "inputs": {
+      "strength": 0.3,
+      "start_percent": 0,
+      "end_percent": 0.3,
+      "positive": [
+        "238",
+        0
+      ],
+      "negative": [
+        "63",
+        1
+      ],
+      "control_net": [
+        "236",
+        0
+      ],
+      "image": [
+        "71",
+        0
+      ],
+      "vae": [
+        "37",
+        0
+      ]
+    },
+    "class_type": "ControlNetApplyAdvanced",
+    "_meta": {
+      "title": "CtrlNetBAPI"
+    }
+  },
+  "71": {
+    "inputs": {
+      "preprocessor": "CannyEdgePreprocessor",
+      "resolution": 1024,
+      "image": [
+        "99",
+        1
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "72": {
+    "inputs": {
+      "images": [
+        "71",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "73": {
+    "inputs": {
+      "from_translate": "auto",
+      "to_translate": "en",
+      "manual_translate": false,
+      "Manual Trasnlate": "Manual Trasnlate",
+      "text": "a red scarf",
+      "speak_and_recognation": true
+    },
+    "class_type": "GoogleTranslateTextNode",
+    "_meta": {
+      "title": "PositivePromptAPI"
+    }
+  },
+  "74": {
+    "inputs": {
+      "text": [
+        "73",
+        0
+      ],
+      "text2": "a red scarf"
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "Show Text 🐍"
+    }
+  },
+  "75": {
+    "inputs": {
+      "text": [
+        "74",
+        0
+      ],
+      "speak_and_recognation": true,
+      "clip": [
+        "106",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "80": {
+    "inputs": {
+      "noise": [
+        "81",
+        0
+      ],
+      "guider": [
+        "82",
+        0
+      ],
+      "sampler": [
+        "83",
+        0
+      ],
+      "sigmas": [
+        "85",
+        0
+      ],
+      "latent_image": [
+        "87",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "81": {
+    "inputs": {
+      "noise_seed": 629295547230790
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "seedAPI"
+    }
+  },
+  "82": {
+    "inputs": {
+      "model": [
+        "187",
+        0
+      ],
+      "conditioning": [
+        "242",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "BasicGuider"
+    }
+  },
+  "83": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "85": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": [
+        "219",
+        0
+      ],
+      "denoise": 1,
+      "model": [
+        "55",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "DenoiseAPI"
+    }
+  },
+  "86": {
+    "inputs": {
+      "samples": [
+        "80",
+        1
+      ],
+      "vae": [
+        "37",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "87": {
+    "inputs": {
+      "grow_mask_by": 6,
+      "pixels": [
+        "99",
+        1
+      ],
+      "vae": [
+        "37",
+        0
+      ],
+      "mask": [
+        "99",
+        2
+      ]
+    },
+    "class_type": "VAEEncodeForInpaint",
+    "_meta": {
+      "title": "VAE Encode (for Inpainting)"
+    }
+  },
+  "99": {
+    "inputs": {
+      "context_expand_pixels": 20,
+      "context_expand_factor": 2,
+      "fill_mask_holes": false,
+      "blur_mask_pixels": 15,
+      "invert_mask": false,
+      "blend_pixels": 15,
+      "rescale_algorithm": "bislerp",
+      "mode": "ranged size",
+      "force_width": 1344,
+      "force_height": 1344,
+      "rescale_factor": 1,
+      "min_width": 512,
+      "min_height": 512,
+      "max_width": 1024,
+      "max_height": 1024,
+      "padding": 32,
+      "image": [
+        "179",
+        0
+      ],
+      "mask": [
+        "154",
+        0
+      ]
+    },
+    "class_type": "InpaintCrop",
+    "_meta": {
+      "title": "InpaintAPI"
+    }
+  },
+  "100": {
+    "inputs": {
+      "rescale_algorithm": "bislerp",
+      "stitch": [
+        "99",
+        0
+      ],
+      "inpainted_image": [
+        "86",
+        0
+      ]
+    },
+    "class_type": "InpaintStitch",
+    "_meta": {
+      "title": "✂️ Inpaint Stitch"
+    }
+  },
+  "106": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "lora_1": {
+        "on": true,
+        "lora": "Flux\\araminta_k_flux_koda.safetensors",
+        "strength": 1
+      },
+      "lora_2": {
+        "on": true,
+        "lora": "Flux\\Detailers\\Discoking_Detailer2K.safetensors",
+        "strength": 1
+      },
+      "lora_3": {
+        "on": true,
+        "lora": "Flux\\Detailers\\FLUX-dev-lora-add_details.safetensors",
+        "strength": 1
+      },
+      "lora_4": {
+        "on": true,
+        "lora": "Flux\\Extras\\FLUX-dev-lora-AntiBlur.safetensors",
+        "strength": 1.5
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "35",
+        0
+      ],
+      "clip": [
+        "36",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "Power Lora Loader (rgthree)"
+    }
+  },
+  "116": {
+    "inputs": {
+      "strength": 0.5,
+      "start_percent": 0,
+      "end_percent": 0.5,
+      "positive": [
+        "239",
+        0
+      ],
+      "negative": [
+        "70",
+        1
+      ],
+      "control_net": [
+        "117",
+        0
+      ],
+      "vae": [
+        "37",
+        0
+      ],
+      "image": [
+        "99",
+        1
+      ],
+      "mask": [
+        "99",
+        2
+      ]
+    },
+    "class_type": "ControlNetInpaintingAliMamaApply",
+    "_meta": {
+      "title": "InpaintControlAPI"
+    }
+  },
+  "117": {
+    "inputs": {
+      "control_net_name": "FLUX.1\\FLUX.1-dev-Controlnet-Inpainting-Beta.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "153": {
+    "inputs": {
+      "filename_prefix": "Flux\\Inpaint\\2024-11-03\\segs1_",
+      "images": [
+        "100",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "SaveImgAPI"
+    }
+  },
+  "154": {
+    "inputs": {
+      "expand": -10,
+      "incremental_expandrate": 0,
+      "tapered_corners": false,
+      "flip_input": false,
+      "blur_radius": 10,
+      "lerp_alpha": 1,
+      "decay_factor": 1,
+      "fill_holes": false,
+      "mask": [
+        "29",
+        0
+      ]
+    },
+    "class_type": "GrowMaskWithBlur",
+    "_meta": {
+      "title": "MaskAPI"
+    }
+  },
+  "156": {
+    "inputs": {
+      "value": true
+    },
+    "class_type": "easy boolean",
+    "_meta": {
+      "title": "TurboOnAPI"
+    }
+  },
+  "174": {
+    "inputs": {
+      "from_translate": "auto",
+      "to_translate": "en",
+      "manual_translate": false,
+      "Manual Trasnlate": "Manual Trasnlate",
+      "text": "scarf",
+      "speak_and_recognation": true
+    },
+    "class_type": "GoogleTranslateTextNode",
+    "_meta": {
+      "title": "MaskPromptAPI"
+    }
+  },
+  "179": {
+    "inputs": {
+      "image": "00060_160.png",
+      "resize": false,
+      "width": 544,
+      "height": 520,
+      "repeat": 1,
+      "keep_proportion": false,
+      "divisible_by": 0,
+      "mask_channel": "alpha",
+      "background_color": "",
+      "upload": "image"
+    },
+    "class_type": "LoadAndResizeImage",
+    "_meta": {
+      "title": "SrcImgAPI"
+    }
+  },
+  "187": {
+    "inputs": {
+      "boolean": [
+        "156",
+        0
+      ],
+      "on_true": [
+        "59",
+        0
+      ],
+      "on_false": [
+        "106",
+        0
+      ]
+    },
+    "class_type": "Switch any [Crystools]",
+    "_meta": {
+      "title": "🪛 Switch any"
+    }
+  },
+  "190": {
+    "inputs": {
+      "title": "ComfyUI - LF Nodes",
+      "message": "Your ComfyUI workflow sent you a notification!",
+      "on_click_action": "Focus tab",
+      "silent": false,
+      "tag": "",
+      "speak_and_recognation": true,
+      "any": [
+        "100",
+        0
+      ],
+      "image": [
+        "100",
+        0
+      ]
+    },
+    "class_type": "LF_Notify",
+    "_meta": {
+      "title": "Notify"
+    }
+  },
+  "199": {
+    "inputs": {
+      "mask": [
+        "99",
+        2
+      ]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
+  "200": {
+    "inputs": {
+      "mask": [
+        "154",
+        0
+      ]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
+  "219": {
+    "inputs": {
+      "on_true": 10,
+      "on_false": 30,
+      "boolean": [
+        "156",
+        0
+      ],
+      "ui_widget": {
+        "bool": true,
+        "roll": 100
+      }
+    },
+    "class_type": "LF_SwitchInteger",
+    "_meta": {
+      "title": "Steps Turbo / Dev"
+    }
+  },
+  "236": {
+    "inputs": {
+      "type": "canny/lineart/anime_lineart/mlsd",
+      "control_net": [
+        "68",
+        0
+      ]
+    },
+    "class_type": "SetUnionControlNetType",
+    "_meta": {
+      "title": "SetUnionControlNetType"
+    }
+  },
+  "237": {
+    "inputs": {
+      "type": "depth",
+      "control_net": [
+        "68",
+        0
+      ]
+    },
+    "class_type": "SetUnionControlNetType",
+    "_meta": {
+      "title": "SetUnionControlNetType"
+    }
+  },
+  "238": {
+    "inputs": {
+      "boolean": [
+        "241",
+        0
+      ],
+      "on_true": [
+        "63",
+        0
+      ],
+      "on_false": [
+        "75",
+        0
+      ]
+    },
+    "class_type": "Switch any [Crystools]",
+    "_meta": {
+      "title": "CtrlNetAOn/off"
+    }
+  },
+  "239": {
+    "inputs": {
+      "boolean": [
+        "240",
+        0
+      ],
+      "on_true": [
+        "70",
+        0
+      ],
+      "on_false": [
+        "238",
+        0
+      ]
+    },
+    "class_type": "Switch any [Crystools]",
+    "_meta": {
+      "title": "CtrlNetBOn/off"
+    }
+  },
+  "240": {
+    "inputs": {
+      "value": true
+    },
+    "class_type": "easy boolean",
+    "_meta": {
+      "title": "CtrlNetBOnAPI"
+    }
+  },
+  "241": {
+    "inputs": {
+      "value": true
+    },
+    "class_type": "easy boolean",
+    "_meta": {
+      "title": "CtrlNetAOnAPI"
+    }
+  },
+  "242": {
+    "inputs": {
+      "boolean": [
+        "243",
+        0
+      ],
+      "on_true": [
+        "116",
+        0
+      ],
+      "on_false": [
+        "239",
+        0
+      ]
+    },
+    "class_type": "Switch any [Crystools]",
+    "_meta": {
+      "title": "Inpaint On/off"
+    }
+  },
+  "243": {
+    "inputs": {
+      "value": true
+    },
+    "class_type": "easy boolean",
+    "_meta": {
+      "title": "InpaintOnAPI"
+    }
+  }
+}

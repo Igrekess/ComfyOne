@@ -1,0 +1,1265 @@
+{
+  "6": {
+    "inputs": {
+      "text": [
+        "862",
+        0
+      ],
+      "speak_and_recognation": true,
+      "clip": [
+        "109",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode"
+    }
+  },
+  "8": {
+    "inputs": {
+      "samples": [
+        "13",
+        1
+      ],
+      "vae": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "10": {
+    "inputs": {
+      "vae_name": "Flux.1_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "11": {
+    "inputs": {
+      "clip_name1": "t5xxl_fp8_e4m3fn.safetensors",
+      "clip_name2": "ViT-L-14-TEXT-detail-improved-hiT-GmP-TE-only-HF.safetensors",
+      "type": "flux"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "13": {
+    "inputs": {
+      "noise": [
+        "25",
+        0
+      ],
+      "guider": [
+        "22",
+        0
+      ],
+      "sampler": [
+        "16",
+        0
+      ],
+      "sigmas": [
+        "466",
+        0
+      ],
+      "latent_image": [
+        "363",
+        2
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "16": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "Sampler selection"
+    }
+  },
+  "17": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": [
+        "621",
+        0
+      ],
+      "denoise": [
+        "344",
+        0
+      ],
+      "model": [
+        "37",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "Scheduler selection and Steps"
+    }
+  },
+  "22": {
+    "inputs": {
+      "model": [
+        "366",
+        0
+      ],
+      "conditioning": [
+        "649",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "BasicGuider"
+    }
+  },
+  "25": {
+    "inputs": {
+      "noise_seed": [
+        "448",
+        0
+      ]
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "Seed from Seed Everywhere"
+    }
+  },
+  "26": {
+    "inputs": {
+      "guidance": 2,
+      "conditioning": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "FluxGuidance"
+    }
+  },
+  "37": {
+    "inputs": {
+      "max_shift": 1.15,
+      "base_shift": 0.5,
+      "width": [
+        "348",
+        0
+      ],
+      "height": [
+        "349",
+        0
+      ],
+      "model": [
+        "109",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingFlux",
+    "_meta": {
+      "title": "ModelSamplingFlux"
+    }
+  },
+  "109": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "lora_1": {
+        "on": true,
+        "lora": "Flux\\flux_realism_lora.safetensors",
+        "strength": 0.8
+      },
+      "lora_2": {
+        "on": true,
+        "lora": "Flux\\Detailers\\FLUX-dev-lora-add_details.safetensors",
+        "strength": 0.5
+      },
+      "lora_3": {
+        "on": false,
+        "lora": "Flux\\araminta_k_flux_koda.safetensors",
+        "strength": 0.3
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "472",
+        0
+      ],
+      "clip": [
+        "472",
+        1
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "FLUX LoRA's Loader"
+    }
+  },
+  "222": {
+    "inputs": {
+      "unet_name": "flux1-dev.safetensors",
+      "weight_dtype": "fp8_e4m3fn_fast"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load FLUX original Model (switch = true)"
+    }
+  },
+  "282": {
+    "inputs": {
+      "MODEL": [
+        "109",
+        0
+      ],
+      "CLIP": [
+        "109",
+        1
+      ],
+      "VAE": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "Anything Everywhere3",
+    "_meta": {
+      "title": "WiFi node 1 (Model Clip Vae with LORA)"
+    }
+  },
+  "318": {
+    "inputs": {
+      "CONDITIONING": [
+        "26",
+        0
+      ]
+    },
+    "class_type": "Anything Everywhere",
+    "_meta": {
+      "title": "WiFi node 2 (Conditioning)"
+    }
+  },
+  "319": {
+    "inputs": {
+      "any_04": [
+        "864",
+        0
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Prompt Switch"
+    }
+  },
+  "344": {
+    "inputs": {
+      "any_02": [
+        "345",
+        0
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Denoise switch"
+    }
+  },
+  "345": {
+    "inputs": {
+      "value": 1
+    },
+    "class_type": "easy float",
+    "_meta": {
+      "title": "DenoiseAPI"
+    }
+  },
+  "348": {
+    "inputs": {
+      "any_01": [
+        "922",
+        0
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Img Width"
+    }
+  },
+  "349": {
+    "inputs": {
+      "any_01": [
+        "922",
+        1
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Img Height"
+    }
+  },
+  "362": {
+    "inputs": {
+      "model": [
+        "109",
+        0
+      ]
+    },
+    "class_type": "DifferentialDiffusion",
+    "_meta": {
+      "title": "Differential Diffusion"
+    }
+  },
+  "363": {
+    "inputs": {
+      "pixels": [
+        "925",
+        0
+      ],
+      "mask": [
+        "364",
+        0
+      ],
+      "positive": [
+        "26",
+        0
+      ],
+      "negative": [
+        "26",
+        0
+      ],
+      "vae": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "InpaintModelConditioning",
+    "_meta": {
+      "title": "InpaintModelConditioning"
+    }
+  },
+  "364": {
+    "inputs": {
+      "kernel_size": 10,
+      "sigma": 2,
+      "mask": [
+        "912",
+        0
+      ]
+    },
+    "class_type": "ImpactGaussianBlurMask",
+    "_meta": {
+      "title": "Gaussian Blur Mask"
+    }
+  },
+  "366": {
+    "inputs": {
+      "any_01": [
+        "362",
+        0
+      ],
+      "any_02": [
+        "37",
+        0
+      ],
+      "any_03": [
+        "109",
+        0
+      ],
+      "any_04": [
+        "109",
+        0
+      ],
+      "any_05": [
+        "109",
+        0
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Model (inpaint)"
+    }
+  },
+  "367": {
+    "inputs": {
+      "any_01": [
+        "363",
+        0
+      ],
+      "any_02": [
+        "26",
+        0
+      ],
+      "any_03": [
+        "26",
+        0
+      ],
+      "any_04": [
+        "26",
+        0
+      ],
+      "any_05": [
+        "26",
+        0
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Conditioning (inpaint)"
+    }
+  },
+  "448": {
+    "inputs": {
+      "seed": 917774862126607
+    },
+    "class_type": "Seed Everywhere",
+    "_meta": {
+      "title": "SeedAPI"
+    }
+  },
+  "466": {
+    "inputs": {
+      "factor": [
+        "467",
+        0
+      ],
+      "sigmas": [
+        "17",
+        0
+      ]
+    },
+    "class_type": "Multiply sigmas",
+    "_meta": {
+      "title": "Multiply sigmas"
+    }
+  },
+  "467": {
+    "inputs": {
+      "Xi": 1,
+      "Xf": 1,
+      "isfloatX": 1
+    },
+    "class_type": "mxSlider",
+    "_meta": {
+      "title": "Sigma Modifier (default = 1.00)"
+    }
+  },
+  "471": {
+    "inputs": {
+      "lora_name": {
+        "content": "Flux\\araminta_k_flux_koda.safetensors",
+        "image": null,
+        "type": "loras"
+      },
+      "lora_weight": 0.7000000000000001,
+      "force_fetch": false,
+      "enable_preview": false,
+      "append_loraname_if_empty": false
+    },
+    "class_type": "LoraLoaderStackedAdvanced",
+    "_meta": {
+      "title": "LoraLoaderStackedAdvanced"
+    }
+  },
+  "472": {
+    "inputs": {
+      "model": [
+        "615",
+        0
+      ],
+      "clip": [
+        "615",
+        1
+      ],
+      "lora_stack": [
+        "471",
+        2
+      ]
+    },
+    "class_type": "CR Apply LoRA Stack",
+    "_meta": {
+      "title": "Main Lora Loading"
+    }
+  },
+  "475": {
+    "inputs": {
+      "images": [
+        "480",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "476": {
+    "inputs": {
+      "invert_mask": false,
+      "blend_mode": "normal",
+      "opacity": 100,
+      "x_percent": 50,
+      "y_percent": 50,
+      "mirror": "None",
+      "scale": 1,
+      "aspect_ratio": 1,
+      "rotate": 0,
+      "transform_method": "lanczos",
+      "anti_aliasing": 0,
+      "background_image": [
+        "477",
+        0
+      ],
+      "layer_image": [
+        "481",
+        0
+      ]
+    },
+    "class_type": "LayerUtility: ImageBlendAdvance V2",
+    "_meta": {
+      "title": "Subject + grey background compositing"
+    }
+  },
+  "477": {
+    "inputs": {
+      "width": [
+        "922",
+        0
+      ],
+      "height": [
+        "922",
+        1
+      ],
+      "red": 125,
+      "green": 125,
+      "blue": 125
+    },
+    "class_type": "Image Blank",
+    "_meta": {
+      "title": "Grey Background"
+    }
+  },
+  "479": {
+    "inputs": {
+      "mask": [
+        "947",
+        0
+      ]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
+  "480": {
+    "inputs": {
+      "exposure": 5,
+      "image": [
+        "481",
+        0
+      ]
+    },
+    "class_type": "LayerColor: Exposure",
+    "_meta": {
+      "title": "LayerColor: Exposure"
+    }
+  },
+  "481": {
+    "inputs": {
+      "threshold": 0.6,
+      "torchscript_jit": "on",
+      "image": [
+        "925",
+        0
+      ]
+    },
+    "class_type": "InspyrenetRembgAdvanced",
+    "_meta": {
+      "title": "Inspyrenet Rembg Advanced"
+    }
+  },
+  "482": {
+    "inputs": {
+      "image": "APY_240426-27_LE_GRAMME_00010_0002.jpg",
+      "resize": false,
+      "width": 1344,
+      "height": 1344,
+      "repeat": 1,
+      "keep_proportion": true,
+      "divisible_by": 2,
+      "mask_channel": "alpha",
+      "background_color": "",
+      "upload": "image"
+    },
+    "class_type": "LoadAndResizeImage",
+    "_meta": {
+      "title": "SrcImgAPI"
+    }
+  },
+  "485": {
+    "inputs": {
+      "boolean": false,
+      "on_true": [
+        "487",
+        0
+      ],
+      "on_false": [
+        "486",
+        0
+      ]
+    },
+    "class_type": "Switch any [Crystools]",
+    "_meta": {
+      "title": "🪛 Switch any"
+    }
+  },
+  "486": {
+    "inputs": {
+      "value": 1
+    },
+    "class_type": "Int-🔬",
+    "_meta": {
+      "title": "Int"
+    }
+  },
+  "487": {
+    "inputs": {
+      "value": 2
+    },
+    "class_type": "Int-🔬",
+    "_meta": {
+      "title": "Int"
+    }
+  },
+  "615": {
+    "inputs": {
+      "lora_name": "HyperSD\\FLUX.1\\FLUX.1-Turbo-Alpha.safetensors",
+      "strength_model": 1,
+      "strength_clip": 1,
+      "lora_override": "None",
+      "enabled": [
+        "617",
+        0
+      ],
+      "model": [
+        "222",
+        0
+      ],
+      "clip": [
+        "11",
+        0
+      ]
+    },
+    "class_type": "AV_LoraLoader",
+    "_meta": {
+      "title": "TURBO FLUX ON/OFF"
+    }
+  },
+  "617": {
+    "inputs": {
+      "value": true
+    },
+    "class_type": "easy boolean",
+    "_meta": {
+      "title": "TurboOnAPI"
+    }
+  },
+  "618": {
+    "inputs": {
+      "value": 8
+    },
+    "class_type": "easy int",
+    "_meta": {
+      "title": "TURBO STEPS"
+    }
+  },
+  "619": {
+    "inputs": {
+      "value": 30
+    },
+    "class_type": "easy int",
+    "_meta": {
+      "title": "DEV STEPS"
+    }
+  },
+  "621": {
+    "inputs": {
+      "boolean": [
+        "617",
+        0
+      ],
+      "on_true": [
+        "618",
+        0
+      ],
+      "on_false": [
+        "619",
+        0
+      ]
+    },
+    "class_type": "Switch any [Crystools]",
+    "_meta": {
+      "title": "TURBO OR NOT"
+    }
+  },
+  "648": {
+    "inputs": {
+      "strength": 0.35000000000000003,
+      "start_percent": 0,
+      "end_percent": 0.3,
+      "positive": [
+        "6",
+        0
+      ],
+      "control_net": [
+        "650",
+        0
+      ],
+      "image": [
+        "651",
+        0
+      ],
+      "negative": [
+        "26",
+        0
+      ],
+      "vae": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "ControlNetApplyAdvanced",
+    "_meta": {
+      "title": "CtrlNetAAPI"
+    }
+  },
+  "649": {
+    "inputs": {
+      "strength": 0.25,
+      "start_percent": 0,
+      "end_percent": 0.2,
+      "positive": [
+        "648",
+        0
+      ],
+      "negative": [
+        "648",
+        1
+      ],
+      "control_net": [
+        "650",
+        0
+      ],
+      "image": [
+        "653",
+        0
+      ],
+      "vae": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "ControlNetApplyAdvanced",
+    "_meta": {
+      "title": "CtrlNetBAPI"
+    }
+  },
+  "650": {
+    "inputs": {
+      "control_net_name": "FLUX.1\\flux_shakker_labs_union_pro-fp8_e4m3fn.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "651": {
+    "inputs": {
+      "preprocessor": "HEDPreprocessor",
+      "resolution": 1024,
+      "image": [
+        "482",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "652": {
+    "inputs": {
+      "images": [
+        "651",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "653": {
+    "inputs": {
+      "preprocessor": "DepthAnythingV2Preprocessor",
+      "resolution": 1024,
+      "image": [
+        "482",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "654": {
+    "inputs": {
+      "images": [
+        "653",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "669": {
+    "inputs": {
+      "text": "[\"flmft\"]",
+      "anything": [
+        "471",
+        1
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Trigger Word Included"
+    }
+  },
+  "672": {
+    "inputs": {
+      "Operation": "A > B",
+      "CompareValue_A": [
+        "621",
+        0
+      ],
+      "CompareValue_B": [
+        "673",
+        0
+      ],
+      "OnTrue": [
+        "674",
+        0
+      ],
+      "OnFalse": [
+        "675",
+        0
+      ]
+    },
+    "class_type": "DF_Logic_node",
+    "_meta": {
+      "title": "Turbo steps or Dev Steps ?"
+    }
+  },
+  "673": {
+    "inputs": {
+      "Number": "19"
+    },
+    "class_type": "Int",
+    "_meta": {
+      "title": "Limite"
+    }
+  },
+  "674": {
+    "inputs": {
+      "Number": "3"
+    },
+    "class_type": "Int",
+    "_meta": {
+      "title": "If DEV"
+    }
+  },
+  "675": {
+    "inputs": {
+      "Number": "2"
+    },
+    "class_type": "Int",
+    "_meta": {
+      "title": "if TURBO"
+    }
+  },
+  "676": {
+    "inputs": {
+      "expression": "a/b",
+      "speak_and_recognation": true,
+      "a": [
+        "621",
+        0
+      ],
+      "b": [
+        "672",
+        0
+      ]
+    },
+    "class_type": "MathExpression|pysssss",
+    "_meta": {
+      "title": "Steps calculator"
+    }
+  },
+  "836": {
+    "inputs": {
+      "boolean": [
+        "837",
+        0
+      ],
+      "on_true": [
+        "838",
+        0
+      ],
+      "on_false": [
+        "669",
+        0
+      ]
+    },
+    "class_type": "easy ifElse",
+    "_meta": {
+      "title": "Trigger Word ?"
+    }
+  },
+  "837": {
+    "inputs": {
+      "text": [
+        "669",
+        0
+      ],
+      "sub_text": "[]",
+      "case_insensitive": false
+    },
+    "class_type": "Text Contains",
+    "_meta": {
+      "title": "Text Contains"
+    }
+  },
+  "838": {
+    "inputs": {
+      "text": "[ohwx]",
+      "speak_and_recognation": true
+    },
+    "class_type": "Text _O",
+    "_meta": {
+      "title": "Manual Trigger Word"
+    }
+  },
+  "859": {
+    "inputs": {
+      "text": [
+        "862",
+        0
+      ],
+      "text2": "[\"flmft\"],a large disabricated, interior industrial space"
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "Inferance Prompt"
+    }
+  },
+  "862": {
+    "inputs": {
+      "delimiter": ",",
+      "clean_whitespace": "true",
+      "text_a": [
+        "836",
+        0
+      ],
+      "text_b": [
+        "319",
+        0
+      ]
+    },
+    "class_type": "Text Concatenate",
+    "_meta": {
+      "title": "trigger  + prompt compo"
+    }
+  },
+  "864": {
+    "inputs": {
+      "from_translate": "auto",
+      "to_translate": "en",
+      "manual_translate": false,
+      "Manual Trasnlate": "Manual Trasnlate",
+      "text": "un grand espace industriel désafecté, intérieur",
+      "speak_and_recognation": true
+    },
+    "class_type": "GoogleTranslateTextNode",
+    "_meta": {
+      "title": "PositivePromptAPI"
+    }
+  },
+  "912": {
+    "inputs": {
+      "mask": [
+        "947",
+        0
+      ]
+    },
+    "class_type": "InvertMask",
+    "_meta": {
+      "title": "InvertMask"
+    }
+  },
+  "922": {
+    "inputs": {
+      "image": [
+        "925",
+        0
+      ]
+    },
+    "class_type": "Get resolution [Crystools]",
+    "_meta": {
+      "title": "🪛 Get resolution"
+    }
+  },
+  "925": {
+    "inputs": {
+      "scale_by": 0.5,
+      "images": [
+        "482",
+        0
+      ]
+    },
+    "class_type": "ImageScaleDownBy",
+    "_meta": {
+      "title": "Scale Down By"
+    }
+  },
+  "926": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "scale_by": 2,
+      "image": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "ImageScaleBy",
+    "_meta": {
+      "title": "Upscale Image By"
+    }
+  },
+  "927": {
+    "inputs": {
+      "seed": 788395353992248,
+      "steps": 4,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "beta",
+      "denoise": 0.35000000000000003,
+      "mode_type": "Linear",
+      "tile_width": [
+        "928",
+        0
+      ],
+      "tile_height": [
+        "929",
+        0
+      ],
+      "mask_blur": 8,
+      "tile_padding": 32,
+      "seam_fix_mode": "None",
+      "seam_fix_denoise": 1,
+      "seam_fix_width": 64,
+      "seam_fix_mask_blur": 8,
+      "seam_fix_padding": 16,
+      "force_uniform_tiles": true,
+      "tiled_decode": false,
+      "upscaled_image": [
+        "926",
+        0
+      ],
+      "model": [
+        "109",
+        0
+      ],
+      "positive": [
+        "26",
+        0
+      ],
+      "negative": [
+        "26",
+        0
+      ],
+      "vae": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "UltimateSDUpscaleNoUpscale",
+    "_meta": {
+      "title": "Ultimate SD Upscale (No Upscale)"
+    }
+  },
+  "928": {
+    "inputs": {
+      "expression": "a /2 + 32\n",
+      "speak_and_recognation": true,
+      "a": [
+        "930",
+        0
+      ]
+    },
+    "class_type": "MathExpression|pysssss",
+    "_meta": {
+      "title": "tile width (Math Expression 🐍)"
+    }
+  },
+  "929": {
+    "inputs": {
+      "expression": "a/2 + 32\n",
+      "speak_and_recognation": true,
+      "a": [
+        "930",
+        1
+      ]
+    },
+    "class_type": "MathExpression|pysssss",
+    "_meta": {
+      "title": "tile height (Math Expression 🐍)"
+    }
+  },
+  "930": {
+    "inputs": {
+      "image": [
+        "926",
+        0
+      ]
+    },
+    "class_type": "Get Image Size",
+    "_meta": {
+      "title": "Get Image Size"
+    }
+  },
+  "934": {
+    "inputs": {
+      "invert_mask": false,
+      "blend_mode": "normal",
+      "opacity": 100,
+      "x_percent": 50,
+      "y_percent": 50,
+      "mirror": "None",
+      "scale": 1,
+      "aspect_ratio": 1,
+      "rotate": 0,
+      "transform_method": "lanczos",
+      "anti_aliasing": 0,
+      "background_image": [
+        "927",
+        0
+      ],
+      "layer_image": [
+        "935",
+        0
+      ],
+      "layer_mask": [
+        "937",
+        0
+      ]
+    },
+    "class_type": "LayerUtility: ImageBlendAdvance V2",
+    "_meta": {
+      "title": "Subject + grey background compositing"
+    }
+  },
+  "935": {
+    "inputs": {
+      "threshold": 0.6,
+      "torchscript_jit": "on",
+      "image": [
+        "482",
+        0
+      ]
+    },
+    "class_type": "InspyrenetRembgAdvanced",
+    "_meta": {
+      "title": "Inspyrenet Rembg Advanced"
+    }
+  },
+  "937": {
+    "inputs": {
+      "invert_mask": false,
+      "grow": -2,
+      "blur": 2,
+      "mask": [
+        "935",
+        1
+      ]
+    },
+    "class_type": "LayerMask: MaskGrow",
+    "_meta": {
+      "title": "LayerMask: MaskGrow"
+    }
+  },
+  "938": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "942",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "SaveImgAPI"
+    }
+  },
+  "942": {
+    "inputs": {
+      "any_01": [
+        "934",
+        0
+      ],
+      "any_02": [
+        "927",
+        0
+      ],
+      "any_03": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Model (inpaint)"
+    }
+  },
+  "947": {
+    "inputs": {
+      "expand": -2,
+      "incremental_expandrate": 0,
+      "tapered_corners": true,
+      "flip_input": false,
+      "blur_radius": 2,
+      "lerp_alpha": 1,
+      "decay_factor": 1,
+      "fill_holes": false,
+      "mask": [
+        "476",
+        1
+      ]
+    },
+    "class_type": "GrowMaskWithBlur",
+    "_meta": {
+      "title": "MaskAPI"
+    }
+  }
+}

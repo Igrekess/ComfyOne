@@ -1,0 +1,62 @@
+{
+  "3": {
+    "inputs": {
+      "image": "APY_240426-27_LE_GRAMME_00010_0002 3_INF_00001_.png",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "ImgSrcAPI"
+    }
+  },
+  "5": {
+    "inputs": {
+      "text_input": "",
+      "task": "dense_region_caption",
+      "fill_mask": true,
+      "keep_model_loaded": false,
+      "max_new_tokens": 1024,
+      "num_beams": 3,
+      "do_sample": true,
+      "output_mask_select": "",
+      "seed": 1009626973801861,
+      "speak_and_recognation": true,
+      "image": [
+        "3",
+        0
+      ],
+      "florence2_model": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "Florence2Run",
+    "_meta": {
+      "title": "Florence2Run"
+    }
+  },
+  "6": {
+    "inputs": {
+      "model": "gokaygokay/Florence-2-Flux-Large",
+      "precision": "fp32",
+      "attention": "sdpa"
+    },
+    "class_type": "DownloadAndLoadFlorence2Model",
+    "_meta": {
+      "title": "DownloadAndLoadFlorence2Model"
+    }
+  },
+  "7": {
+    "inputs": {
+      "text": [
+        "5",
+        2
+      ],
+      "text2": "A man in a brown suit sitting on a black chair with a red book in his lap.<loc_44><loc_208><loc_802><loc_992>A man sitting on top of a black metal chair with his legs crossed. He is wearing a dark brown suit jacket over a beige shirt. The suit jacket has a single button on the left side of his chest. The shirt has a light brown color and the sleeves are slightly rolled up. The man is holding the red book with both hands. The chair has a black leather seat and metal legs. The floor is covered in a patterned rug with a floral design. The background is blurred but appears to be a room with a large window. \n\nThe man is sitting in front of a large floral arrangement. The flowers in the arrangement are in shades of pink, orange, and yellow. The arrangement is made up of different types of flowers, including roses, daisies, and lilies. There is also a white lampshade in the corner of the room. The lighting is soft and warm. The overall mood of the image is peaceful and serene."
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "CaptionAPI"
+    }
+  }
+}

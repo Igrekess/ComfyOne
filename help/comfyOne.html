@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComfyOne - Capture One Integration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        code {
+            background-color: #eee;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>ComfyOne - Capture One Integration with ComfyUI API</h1>
+
+<p>This script, <strong>ComfyOne</strong>, integrates the <strong>ComfyUI API</strong> directly within <strong>Capture One</strong>, offering extensive control over AI-powered image generation through a highly customizable interface. Created by Yan Senez, <strong>ComfyOne</strong> provides control over prompts, workflows, resolution, dual ControlNet support, IP-Adapter, and inpainting settings—all managed within Capture One.</p>
+
+<div class="section">
+    <h2>Key Features</h2>
+    <ul>
+        <li><strong>Server Configuration</strong>: Easily connect to the ComfyUI server by specifying its URL, with a default of <code>127.0.0.1:8188</code>.</li>
+        <li><strong>Workflow Management</strong>: Dynamically loads available workflows from a specified folder, allowing users to select and execute a workflow from within Capture One. Pre-built examples are provided, but users can also create their own workflows tailored to specific needs, gaining full control over the various parameters available in Capture One by following the node naming convention.</li>
+        <li><strong>Prompting System</strong>: Define positive and negative prompts to guide content in the generated image, and set seed values to control randomness, offering flexibility in achieving specific styles and moods.</li>
+        <li><strong>Resolution and Denoising</strong>: Choose from predefined resolution settings (Low, Mid, High) and set denoising levels to refine image clarity.</li>
+        <li><strong>Masking Options</strong>: Configure mask prompts to target specific areas of the image, with options for blur, expand, invert, or fill. These parameters allow fine control over how the generated image interacts with masked areas.</li>
+        <li><strong>Dual ControlNet Integration</strong>: <strong>ComfyOne</strong> supports two ControlNets (ControlNet A and B) simultaneously, each with customizable strength, start, and end parameters. ControlNet nodes enable structural and compositional control, helping users shape the layout of the generated image based on reference images. Both ControlNet A and B also support the upload of custom reference images that can be independent of the Capture One variant, providing additional flexibility.</li>
+        <li><strong>IP-Adapter Functionality</strong>: Customize the IP-Adapter to stylize and enhance the aesthetic details of the generated image. Unlike ControlNet, which focuses on image composition, IP-Adapter is designed to refine the stylistic elements. Users can upload different reference images for the IP-Adapter, enabling unique stylistic variations separate from the selected Capture One variant.</li>
+        <li><strong>Inpainting Mode</strong>: Inpainting settings enable targeted editing with blur and blending options for masks, ideal for refining specific areas of the generated image.</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Node Naming and Automated Workflow Management</h2>
+    <p>To fully automate the workflow management through <strong>ComfyOne</strong>, users need to follow a precise naming convention for nodes within the JSON workflow. This format must adhere to the <strong>ComfyUI API JSON</strong> structure, allowing a separate Python script to dynamically manage parameters by locating and updating specific nodes based on these identifiers.</p>
+    <p><strong>Pre-built workflow examples are provided</strong>, but users are also encouraged to construct their own workflows to suit specific requirements. As long as the node naming convention is respected, users have access to all variable settings within Capture One.</p>
+
+    <h3>Node Identifiers for Automation</h3>
+    <ul>
+        <li><strong>Prompt Control</strong>:
+            <ul>
+                <li><code>PositivePromptAPI</code></li>
+                <li><code>NegativePromptAPI</code></li>
+            </ul>
+        </li>
+        <li><strong>Image Generation</strong>:
+            <ul>
+                <li><code>SeedAPI</code></li>
+                <li><code>DenoiseAPI</code></li>
+                <li><code>SrcImgAPI</code></li>
+                <li><code>SaveImgAPI</code></li>
+            </ul>
+        </li>
+        <li><strong>Advanced Settings</strong>:
+            <ul>
+                <li><code>turboOnAPI</code></li>
+                <li><code>inpaintOnAPI</code></li>
+                <li><code>resolutionAPI</code></li>
+            </ul>
+        </li>
+        <li><strong>Masking and Inpainting</strong>:
+            <ul>
+                <li><code>maskAPI</code></li>
+                <li><code>inpaintAPI</code></li>
+            </ul>
+        </li>
+        <li><strong>ControlNet Nodes</strong>:
+            <ul>
+                <li><code>ctrlNetAAPI</code></li>
+                <li><code>ctrlNetBAPI</code></li>
+                <li><code>uploadImgCtrlNetA</code></li>
+                <li><code>uploadImgCtrlNetB</code></li>
+            </ul>
+        </li>
+        <li><strong>IP-Adapter Node</strong>:
+            <ul>
+                <li><code>ipAdapterAPI</code></li>
+                <li><code>uploadImgipAdapter</code></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Workflow Tree with Adjustable Variables per Node</h2>
+    <p>This is a breakdown of the node structure with adjustable variables available within each:</p>
+    <ul>
+        <li><strong>PositivePromptAPI</strong>: Adjust the positive prompt for image generation.</li>
+        <li><strong>NegativePromptAPI</strong>: Adjust the negative prompt to filter out unwanted elements.</li>
+        <li><strong>SeedAPI</strong>: Set the seed value to control randomness in the generated output.</li>
+        <li><strong>DenoiseAPI</strong>: Adjust the level of denoising for image refinement.</li>
+        <li><strong>SrcImgAPI</strong>: Source image input path for reference.</li>
+        <li><strong>SaveImgAPI</strong>: Path to save the output image.</li>
+        <li><strong>turboOnAPI</strong>: Boolean value to enable or disable Turbo mode.</li>
+        <li><strong>inpaintOnAPI</strong>: Boolean value to enable or disable inpainting mode.</li>
+        <li><strong>resolutionAPI</strong>: Set the resolution (Low, Mid, High).</li>
+        <li><strong>maskAPI</strong>: Set mask prompts, blur level, expansion, inversion, and fill options.</li>
+        <li><strong>inpaintAPI</strong>: Parameters to control blur and blend options for inpainting.</li>
+        <li><strong>ctrlNetAAPI / ctrlNetBAPI</strong>: ControlNet A and B settings, including strength, start, and end points.</li>
+        <li><strong>uploadImgCtrlNetA / uploadImgCtrlNetB</strong>: Upload custom reference images for ControlNet A and B.</li>
+        <li><strong>ipAdapterAPI</strong>: Set IP-Adapter parameters, including strength and positions.</li>
+        <li><strong>uploadImgipAdapter</strong>: Upload a reference image for the IP-Adapter.</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Script Execution and Generation from Capture One</h2>
+    <p>A second script allows users to <strong>launch image generation directly from the Capture One window</strong> using saved parameters. This enables quick iteration without reconfiguring settings each time.</p>
+</div>
+
+<div class="section">
+    <h2>Installation Script</h2>
+    <p><strong>ComfyOne</strong> includes an installation script that sets up a <strong>virtual environment (venv)</strong> and automatically installs all necessary libraries, making the installation process straightforward and ensuring that dependencies are correctly configured.</p>
+</div>
+
+<div class="section">
+    <h2>User Interface and Configuration</h2>
+    <p>The script uses <strong>AppleScript’s Dialog Toolkit Plus</strong> and <strong>PrefsStorageLib</strong> to create a smooth user interface within Capture One, allowing users to manage their inputs and save preferences. Users can:</p>
+    <ul>
+        <li>Save or load configurations</li>
+        <li>Toggle various options</li>
+        <li>Preview and execute workflows</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Workflow Execution</h2>
+    <p>After configuring the settings, users can run the script to:</p>
+    <ul>
+        <li>Apply all chosen parameters to the diffusion model on the ComfyUI server.</li>
+        <li>Save their configuration for easy repeatability.</li>
+    </ul>
+    <p><strong>ComfyOne</strong> is a valuable tool for professionals in image generation, providing ControlNet for compositional guidance, IP-Adapter for styling, and full node-based automation using the <strong>ComfyUI API JSON</strong> format. This setup allows extensive creative freedom, with all controls accessible directly from within Capture One.</p>
+</div>
+
+</body>
+</html>

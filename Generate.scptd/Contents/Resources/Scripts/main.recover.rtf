@@ -1,0 +1,1127 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Italic;\f1\fnil\fcharset0 Menlo-Regular;\f2\fnil\fcharset0 Menlo-Bold;
+}
+{\colortbl;\red255\green255\blue255;\red77\green78\blue78;\red108\green5\blue211;\red0\green0\blue255;
+\red0\green22\blue176;\red255\green0\blue0;\red64\green128\blue0;}
+{\*\expandedcolortbl;;\csgenericrgb\c30000\c30500\c30500;\csgenericrgb\c42300\c1800\c82800;\csgenericrgb\c0\c0\c99819;
+\csgenericrgb\c0\c8700\c69000;\csgenericrgb\c100000\c0\c0;\csgenericrgb\c25000\c50000\c0;}
+\deftab480
+\pard\pardeftab480\slleading40\pardirnatural\partightenfactor0
+
+\f0\i\fs24 \cf2 --\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7
+\f1\i0 \cf0 \
+\pard\pardeftab480\slleading40\pardirnatural\partightenfactor0
+
+\f0\i \cf2 -- ComfyONE - GENERATE
+\f1\i0 \cf0 \
+
+\f0\i \cf2 -- Author        : Yan Senez
+\f1\i0 \cf0 \
+
+\f0\i \cf2 -- Created on: 01/11/2024
+\f1\i0 \cf0 \
+
+\f0\i \cf2 -- Task          : Automate the interaction between Capture One and ComfyUI to get generative images with advanced diffusion methods.
+\f1\i0 \cf0 \
+
+\f0\i \cf2 -- Version       : 1.0
+\f1\i0 \cf0 \
+
+\f0\i \cf2 -- Copyright \'a9 2024 Yan Senez, All Rights Reserved
+\f1\i0 \cf0 \
+
+\f0\i \cf2 --\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7\'b7
+\f1\i0 \cf0 \
+\
+
+\f2\b use
+\f1\b0  \cf3 AppleScript\cf0  \cf4 version\cf0  "2.4" 
+\f0\i \cf2 -- Yosemite (10.10) or later
+\f1\i0 \cf0 \
+
+\f2\b use
+\f1\b0  
+\f0\i \cf4 scripting additions
+\f1\i0 \cf0 \
+
+\f2\b use
+\f1\b0  
+\f0\i \cf4 script
+\f1\i0 \cf0  "PrefsStorageLib" \cf4 version\cf0  "1.1.0" 
+\f0\i \cf2 -- pour r\'e9cup\'e9rer les pr\'e9f\'e9rences stock\'e9es
+\f1\i0 \cf0 \
+
+\f2\b use
+\f1\b0  
+\f0\i \cf4 framework
+\f1\i0 \cf0  "Foundation" 
+\f0\i \cf2 -- pour JSON et WebSocket
+\f1\i0 \cf0 \
+
+\f2\b \cf5 prepare storage
+\f1\b0 \cf0  \cf5 for domain\cf0  "com.yse.comfyONE"\
+\
+
+\f0\i \cf2 -- Debug line
+\f1\i0 \cf0 \
+
+\f0\i \cf2 --display dialog "Le script generate a \'e9t\'e9 appel\'e9 avec succ\'e8s." buttons \{"OK"\} default button "OK"
+\f1\i0 \cf0 \
+\
+\
+\
+\
+\
+
+\f0\i \cf2 -- Pr\'e9paration pour la g\'e9n\'e9ration des variantes via Capture One
+\f1\i0 \cf0 \
+
+\f2\b on
+\f1\b0  \cf6 GenerateVariantUsingComfyUI\cf0 ()\
+	
+\f0\i \cf2 -- Chargement des pr\'e9f\'e9rences n\'e9cessaires
+\f1\i0 \cf0 \
+	
+\f2\b set
+\f1\b0  \cf7 server_url\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "server_url"\
+	
+\f2\b \cf4 log
+\f1\b0 \cf0  "server_url :" & \cf7 server_url\cf0 \
+	
+\f2\b set
+\f1\b0  \cf7 mask_prompt\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "mask_prompt"\
+	
+\f2\b set
+\f1\b0  \cf7 positive_prompt\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "positive_prompt"\
+	
+\f2\b set
+\f1\b0  \cf7 negative_prompt\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "negative_prompt"\
+	
+\f2\b set
+\f1\b0  \cf7 seed_value\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "seed_value"\
+	
+\f2\b set
+\f1\b0  \cf7 seed_control\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "seed_control"\
+	
+\f2\b set
+\f1\b0  \cf7 denoise_level\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "denoise_level"\
+	
+\f2\b set
+\f1\b0  \cf7 ctrlA_strength\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "ctrlA_strength"\
+	
+\f2\b set
+\f1\b0  \cf7 ctrlA_start\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "ctrlA_start"\
+	
+\f2\b set
+\f1\b0  \cf7 ctrlA_end\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "ctrlA_end"\
+	
+\f2\b set
+\f1\b0  \cf7 ctrlB_strength\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "ctrlB_strength"\
+	
+\f2\b set
+\f1\b0  \cf7 ctrlB_start\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "ctrlB_start"\
+	
+\f2\b set
+\f1\b0  \cf7 ctrlB_end\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "ctrlB_end"\
+	
+\f2\b set
+\f1\b0  \cf7 fillMaskHole\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "fillMaskHole"\
+	
+\f2\b set
+\f1\b0  \cf7 invertMask\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "invertMask"\
+	
+\f2\b set
+\f1\b0  \cf7 blurInpaint\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "blurInpaint"\
+	
+\f2\b set
+\f1\b0  \cf7 blendInpaint\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "blendInpaint"\
+	
+\f2\b set
+\f1\b0  \cf7 contextExpandPixels\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "contextExpandPixels"\
+	
+\f2\b set
+\f1\b0  \cf7 contextExpandFactor\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "contextExpandFactor"\
+	
+\f2\b set
+\f1\b0  \cf7 ipAdapter_strength\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "ipAdapter_strength"\
+	
+\f2\b set
+\f1\b0  \cf7 workflow\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "workflow"\
+	
+\f2\b set
+\f1\b0  \cf7 ipAdapterImg\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "ipAdapterImg"\
+	
+\f2\b set
+\f1\b0  \cf7 ctrlBImg\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "ctrlBImg"\
+	
+\f2\b set
+\f1\b0  \cf7 ctrlAImg\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "ctrlAImg"\
+	
+\f2\b set
+\f1\b0  \cf7 TurboON\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "TurboON"\
+	
+\f2\b set
+\f1\b0  \cf7 InpaintON\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "InpaintON"\
+	
+\f2\b set
+\f1\b0  \cf7 ipAdapterON\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "ipAdapterON"\
+	
+\f2\b set
+\f1\b0  \cf7 ctrlAON\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "ctrlAON"\
+	
+\f2\b set
+\f1\b0  \cf7 ctrlBON\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "ctrlBON"\
+	
+\f2\b set
+\f1\b0  \cf7 maskFill\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "maskFill"\
+	
+\f2\b set
+\f1\b0  \cf7 maskBlur\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "maskBlur"\
+	
+\f2\b set
+\f1\b0  \cf7 maskExpand\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "maskExpand"\
+	
+\f2\b set
+\f1\b0  \cf7 resolutionOptions\cf0  
+\f2\b to
+\f1\b0  \{"Low Res", "Mid Res", "High Res"\}\
+	
+\f2\b set
+\f1\b0  \cf7 theResolution\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "theResolution"\
+	
+\f2\b set
+\f1\b0  \cf7 inpaintStrenght\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "inpaintStrenght"\
+	
+\f2\b set
+\f1\b0  \cf7 inpaintStart\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "inpaintStart"\
+	
+\f2\b set
+\f1\b0  \cf7 inpaintEnd\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 value for key
+\f1\b0 \cf0  "inpaintEnd"\
+	\
+	
+\f2\b tell
+\f1\b0  
+\f0\i \cf4 application
+\f1\i0 \cf0  "Capture One" 
+\f0\i \cf2 -- Capture One part -- We process the selected variant(s) with the "LAYOUT" recipe 
+\f1\i0 \cf0 \
+		
+\f2\b tell
+\f1\b0  
+\f2\b front
+\f1\b0  
+\f0\i \cf4 document
+\f1\i0 \cf0 \
+			
+\f2\b try
+\f1\b0 \
+				
+\f2\b set
+\f1\b0  \cf7 LayoutRecipe\cf0  
+\f2\b to
+\f1\b0  
+\f0\i \cf4 recipe
+\f1\i0 \cf0  "ComfyONE"\
+			
+\f2\b on
+\f1\b0  
+\f2\b error
+\f1\b0 \
+				
+\f2\b set
+\f1\b0  \cf7 LayoutRecipe\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf4 make
+\f1\b0 \cf0  \cf4 new\cf0  
+\f0\i \cf4 recipe
+\f1\i0 \cf0  \cf4 with properties\cf0  \{\cf3 name\cf0 :"ComfyONE", \cf3 output format\cf0 :\cf3 JPEG_QuickProof\cf0 , \cf3 color profile\cf0 :"sRGB Color Space Profile", \cf3 export crop method\cf0 :\cf3 respect\cf0 , \cf3 ignore crop\cf0 :\cf3 false\cf0 , \cf3 include Camera Metadata\cf0 :\cf3 true\cf0 , \cf3 include copyright\cf0 :\cf3 true\cf0 , \cf3 root folder type\cf0 :\cf3 output location\cf0 , \cf3 output sub folder\cf0 :"INFERENCE_PNG", \cf3 sharpening\cf0 :\cf3 for screen\cf0 , \cf3 sharpening amount\cf0 :60.0, \cf3 sharpening distance\cf0 :100.0, \cf3 sharpening distance type\cf0 :\cf3 percent of diagonal\cf0 , \cf3 sharpening radius\cf0 :0.600000023842, \cf3 sharpening threshold\cf0 :0.0, \cf3 thumbnails\cf0 :\cf3 false\cf0 \}\
+				
+\f0\i \cf2 --tell LayoutRecipe to set \{its enabled, its scaling method, its scaling unit, its primary scaling value\} to \{false, Long_Edge, pixels, 1344\}
+\f1\i0 \cf0 \
+				
+\f2\b tell
+\f1\b0  \cf7 LayoutRecipe\cf0  
+\f2\b to
+\f1\b0  
+\f2\b set
+\f1\b0  \{
+\f2\b its
+\f1\b0  \cf3 enabled\cf0 \} 
+\f2\b to
+\f1\b0  \{\cf3 false\cf0 \}\
+			
+\f2\b end
+\f1\b0  
+\f2\b try
+\f1\b0 \
+			
+\f2\b set
+\f1\b0  \cf7 outputFormatValue\cf0  
+\f2\b to
+\f1\b0  \cf3 output format\cf0  
+\f2\b of
+\f1\b0  \cf7 LayoutRecipe\cf0 \
+			
+\f2\b set
+\f1\b0  \cf7 imgFolder\cf0  
+\f2\b to
+\f1\b0  \cf3 output sub folder\cf0  
+\f2\b of
+\f1\b0  \cf7 LayoutRecipe\cf0 \
+			
+\f2\b if
+\f1\b0  \cf7 outputFormatValue\cf0  = \cf3 JPEG_QuickProof\cf0  
+\f2\b then
+\f1\b0 \
+				
+\f2\b set
+\f1\b0  \cf7 fileExt\cf0  
+\f2\b to
+\f1\b0  ".jpg"\
+			
+\f2\b else
+\f1\b0  
+\f2\b if
+\f1\b0  \cf7 outputFormatValue\cf0  = \cf3 JPEG\cf0  
+\f2\b then
+\f1\b0 \
+				
+\f2\b set
+\f1\b0  \cf7 fileExt\cf0  
+\f2\b to
+\f1\b0  ".jpg"\
+			
+\f2\b else
+\f1\b0  
+\f2\b if
+\f1\b0  \cf7 outputFormatValue\cf0  = \cf3 TIFF\cf0  
+\f2\b then
+\f1\b0 \
+				
+\f2\b set
+\f1\b0  \cf7 fileExt\cf0  
+\f2\b to
+\f1\b0  ".tif"\
+			
+\f2\b else
+\f1\b0  
+\f2\b if
+\f1\b0  \cf7 outputFormatValue\cf0  = \cf3 PSD\cf0  
+\f2\b then
+\f1\b0 \
+				
+\f2\b set
+\f1\b0  \cf7 fileExt\cf0  
+\f2\b to
+\f1\b0  ".psd"\
+			
+\f2\b else
+\f1\b0  
+\f2\b if
+\f1\b0  \cf7 outputFormatValue\cf0  = \cf3 DNG\cf0  
+\f2\b then
+\f1\b0 \
+				
+\f2\b set
+\f1\b0  \cf7 fileExt\cf0  
+\f2\b to
+\f1\b0  ".dng"\
+			
+\f2\b else
+\f1\b0  
+\f2\b if
+\f1\b0  \cf7 outputFormatValue\cf0  = \cf3 PNG\cf0  
+\f2\b then
+\f1\b0 \
+				
+\f2\b set
+\f1\b0  \cf7 fileExt\cf0  
+\f2\b to
+\f1\b0  ".png"\
+			
+\f2\b end
+\f1\b0  
+\f2\b if
+\f1\b0 \
+			
+\f2\b set
+\f1\b0  \cf7 outputFolder\cf0  
+\f2\b to
+\f1\b0  \cf3 output\cf0 \
+			
+\f2\b set
+\f1\b0  \cf7 sessionPath\cf0  
+\f2\b to
+\f1\b0  \cf3 folder\cf0 \
+		
+\f2\b end
+\f1\b0  
+\f2\b tell
+\f1\b0 \
+		
+\f2\b set
+\f1\b0  \cf7 selectedVariants\cf0  
+\f2\b to
+\f1\b0  (
+\f2\b get
+\f1\b0  \cf3 selected variants\cf0 )\
+		
+\f2\b if
+\f1\b0  \cf7 selectedVariants\cf0  
+\f2\b is
+\f1\b0  \{\} 
+\f2\b then
+\f1\b0  
+\f0\i \cf2 -- if there is no variant selected, ask to choose one
+\f1\i0 \cf0 \
+			
+\f2\b \cf5 display dialog
+\f1\b0 \cf0  "Please, select an image and try again..."\
+		
+\f2\b else
+\f1\b0 \
+			
+\f2\b repeat
+\f1\b0  
+\f2\b with
+\f1\b0  \cf7 thisVariant\cf0  
+\f2\b in
+\f1\b0  \cf7 selectedVariants\cf0 \
+				
+\f2\b \cf4 process
+\f1\b0 \cf0  \cf7 thisVariant\cf0  \cf4 recipe\cf0  "Inference"\
+				
+\f2\b repeat
+\f1\b0  
+\f2\b while
+\f1\b0  \cf7 thisVariant's\cf0  \cf3 queued\cf0  
+\f2\b is
+\f1\b0  \cf3 true\cf0 \
+					
+\f2\b \cf4 delay
+\f1\b0 \cf0  0.2\
+				
+\f2\b end
+\f1\b0  
+\f2\b repeat
+\f1\b0 \
+				
+\f2\b \cf4 log
+\f1\b0 \cf0  "-> outputFolder : " & \cf7 outputFolder\cf0 \
+				
+\f2\b \cf4 log
+\f1\b0 \cf0  "-> imgFolder : " & \cf7 imgFolder\cf0 \
+				
+\f2\b set
+\f1\b0  \cf7 imgPath\cf0  
+\f2\b to
+\f1\b0  (\cf7 outputFolder\cf0  & \cf7 imgFolder\cf0  & ":" & \cf3 name\cf0  
+\f2\b of
+\f1\b0  \cf7 thisVariant\cf0  & \cf7 fileExt\cf0 ) 
+\f2\b as
+\f1\b0  
+\f0\i \cf4 string
+\f1\i0 \cf0  
+\f0\i \cf2 -- we get the full path for the jpeg
+\f1\i0 \cf0 \
+				
+\f2\b set
+\f1\b0  \cf7 rawSrcPath\cf0  
+\f2\b to
+\f1\b0  \cf3 path\cf0  
+\f2\b of
+\f1\b0  \cf3 parent image\cf0  
+\f2\b of
+\f1\b0  \cf7 thisVariant\cf0 \
+				
+\f2\b set
+\f1\b0  \cf7 rawSrcPath\cf0  
+\f2\b to
+\f1\b0  
+\f2\b \cf5 do shell script
+\f1\b0 \cf0  "dirname " & \cf3 quoted form\cf0  
+\f2\b of
+\f1\b0  \cf7 rawSrcPath\cf0 \
+				
+\f0\i \cf2 --set imgSrc to "/Volumes" & imgSrc
+\f1\i0 \cf0 \
+				
+\f2\b \cf4 log
+\f1\b0 \cf0  "-> rawSrcPath ???? : " & \cf7 rawSrcPath\cf0 \
+				
+\f0\i \cf2 --log "!!!!!imgPath :" & imgPath
+\f1\i0 \cf0 \
+				
+\f2\b set
+\f1\b0  \cf7 imgPath\cf0  
+\f2\b to
+\f1\b0  
+\f2\b my
+\f1\b0  \cf6 getIMGPath\cf0 (\cf7 outputFolder\cf0 , \cf7 imgFolder\cf0 , \cf3 name\cf0  
+\f2\b of
+\f1\b0  \cf7 thisVariant\cf0 , \cf7 fileExt\cf0 )\
+				
+\f2\b \cf4 log
+\f1\b0 \cf0  "/////imgPath :" & \cf7 imgPath\cf0 \
+				
+\f2\b set
+\f1\b0  \cf7 imgPathPosix\cf0  
+\f2\b to
+\f1\b0  
+\f2\b my
+\f1\b0  \cf6 convertToPosixPath\cf0 (\cf7 imgPath\cf0 ) 
+\f0\i \cf2 -- conversion au format POSIX
+\f1\i0 \cf0 \
+				
+\f2\b set
+\f1\b0  \cf7 imgPathPosix\cf0  
+\f2\b to
+\f1\b0  "/Volumes" & \cf7 imgPathPosix\cf0 \
+				
+\f2\b \cf4 log
+\f1\b0 \cf0  "!!!!!imgPathPosix :" & \cf7 imgPathPosix\cf0 \
+				
+\f2\b if
+\f1\b0  \cf7 seed_control\cf0  
+\f2\b is
+\f1\b0  "Fixe" 
+\f2\b then
+\f1\b0 \
+					
+\f2\b set
+\f1\b0  \cf7 seed_value\cf0  
+\f2\b to
+\f1\b0  \cf7 seed_value\cf0 \
+					
+\f2\b \cf5 assign value
+\f1\b0 \cf0  \cf7 seed_value\cf0  \cf5 to key\cf0  "seed_value"\
+				
+\f2\b else
+\f1\b0  
+\f2\b if
+\f1\b0  \cf7 seed_control\cf0  
+\f2\b is
+\f1\b0  "Increment" 
+\f2\b then
+\f1\b0 \
+					
+\f2\b set
+\f1\b0  \cf7 seed_value\cf0  
+\f2\b to
+\f1\b0  \cf7 seed_value\cf0  + 1\
+					
+\f2\b \cf5 assign value
+\f1\b0 \cf0  \cf7 seed_value\cf0  \cf5 to key\cf0  "seed_value"\
+				
+\f2\b else
+\f1\b0  
+\f2\b if
+\f1\b0  \cf7 seed_control\cf0  
+\f2\b is
+\f1\b0  "Decrement" 
+\f2\b then
+\f1\b0 \
+					
+\f2\b set
+\f1\b0  \cf7 seed_value\cf0  
+\f2\b to
+\f1\b0  \cf7 seed_value\cf0  - 1\
+					
+\f2\b \cf5 assign value
+\f1\b0 \cf0  \cf7 seed_value\cf0  \cf5 to key\cf0  "seed_value"\
+				
+\f2\b else
+\f1\b0  
+\f2\b if
+\f1\b0  \cf7 seed_control\cf0  
+\f2\b is
+\f1\b0  "Random" 
+\f2\b then
+\f1\b0 \
+					
+\f2\b set
+\f1\b0  \cf7 seed_value\cf0  
+\f2\b to
+\f1\b0  (
+\f2\b \cf5 random number
+\f1\b0 \cf0  \cf5 from\cf0  1 \cf5 to\cf0  100000000) 
+\f2\b as
+\f1\b0  
+\f0\i \cf4 integer
+\f1\i0 \cf0 \
+					
+\f2\b \cf5 assign value
+\f1\b0 \cf0  \cf7 seed_value\cf0  \cf5 to key\cf0  "seed_value"\
+				
+\f2\b end
+\f1\b0  
+\f2\b if
+\f1\b0 \
+				
+\f2\b \cf4 log
+\f1\b0 \cf0  "SEED : " & \cf7 seed_value\cf0 \
+				
+\f0\i \cf2 -- Cr\'e9er le fichier d'arguments pour le script
+\f1\i0 \cf0 \
+				
+\f2\b try
+\f1\b0 \
+					
+\f2\b set
+\f1\b0  \cf7 argsFile\cf0  
+\f2\b to
+\f1\b0  "/tmp/comfyOne_args.txt"\
+					
+\f2\b set
+\f1\b0  \cf7 argsContent\cf0  
+\f2\b to
+\f1\b0  "\\"" & \cf7 server_url\cf0  & "\\" \\"" & \cf7 positive_prompt\cf0  & "\\" \\"" & \cf7 negative_prompt\cf0  & "\\" \\"" & \cf7 seed_value\cf0  & "\\" \\"" & \cf7 denoise_level\cf0  & "\\" \\"" & \cf7 imgPathPosix\cf0  & "\\" \\"" & \cf7 workflow\cf0  & "\\" \\"" & \cf7 ctrlAON\cf0  & "\\" \\"" & \cf7 ctrlBON\cf0  & "\\" \\"" & \cf7 ipAdapterON\cf0  & "\\" \\"" & \cf7 fillMaskHole\cf0  & "\\" \\"" & \cf7 mask_prompt\cf0  & "\\" \\"" & \cf7 maskBlur\cf0  & "\\" \\"" & \cf7 maskExpand\cf0  & "\\" \\"" & \cf7 invertMask\cf0  & "\\" \\"" & \cf7 blurInpaint\cf0  & "\\" \\"" & \cf7 blendInpaint\cf0  & "\\" \\"" & \cf7 contextExpandPixels\cf0  & "\\" \\"" & \cf7 contextExpandFactor\cf0  & "\\" \\"" & \cf7 ctrlA_start\cf0  & "\\" \\"" & \cf7 ctrlA_end\cf0  & "\\" \\"" & \cf7 ctrlA_strength\cf0  & "\\" \\"" & \cf7 ctrlB_start\cf0  & "\\" \\"" & \cf7 ctrlB_end\cf0  & "\\" \\"" & \cf7 ctrlB_strength\cf0  & "\\" \\"" & \cf7 ipAdapter_strength\cf0  & "\\" \\"" & \cf7 TurboON\cf0  & "\\" \\"" & \cf7 InpaintON\cf0  & "\\" \\"" & \cf7 maskFill\cf0  & "\\" \\"" & \cf7 rawSrcPath\cf0  & "\\" \\"" & \cf7 ipAdapterImg\cf0  & "\\" \\"" & \cf7 ctrlAImg\cf0  & "\\" \\"" & \cf7 ctrlBImg\cf0  & "\\" \\"" & \cf7 theResolution\cf0  & "\\" \\"" & \cf7 inpaintStrenght\cf0  & "\\" \\"" & \cf7 inpaintStart\cf0  & "\\" \\"" & \cf7 inpaintEnd\cf0  & "\\""\
+					\
+					
+\f2\b \cf5 do shell script
+\f1\b0 \cf0  "echo " & \cf3 quoted form\cf0  
+\f2\b of
+\f1\b0  \cf7 argsContent\cf0  & " > " & \cf7 argsFile\cf0 \
+					\
+					
+\f0\i \cf2 -- V\'e9rifier si le fichier a \'e9t\'e9 cr\'e9\'e9
+\f1\i0 \cf0 \
+					
+\f2\b set
+\f1\b0  \cf7 argsFileExists\cf0  
+\f2\b to
+\f1\b0  (
+\f2\b \cf5 do shell script
+\f1\b0 \cf0  "test -f " & \cf7 argsFile\cf0  & " && echo exists") 
+\f2\b as
+\f1\b0  
+\f0\i \cf4 text
+\f1\i0 \cf0 \
+					
+\f2\b if
+\f1\b0  \cf7 argsFileExists\cf0  
+\f2\b is
+\f1\b0  
+\f2\b not
+\f1\b0  "exists" 
+\f2\b then
+\f1\b0 \
+						
+\f2\b \cf5 display dialog
+\f1\b0 \cf0  "Erreur : le fichier temporaire des arguments n'a pas \'e9t\'e9 cr\'e9\'e9." \cf5 buttons\cf0  \{"OK"\} \cf5 default button\cf0  "OK"\
+						
+\f2\b return
+\f1\b0 \
+					
+\f2\b end
+\f1\b0  
+\f2\b if
+\f1\b0 \
+					\
+					
+\f0\i \cf2 -- D\'e9marrer la t\'e2che avec launchctl pour liberer capture one
+\f1\i0 \cf0 \
+					
+\f2\b \cf5 do shell script
+\f1\b0 \cf0  "launchctl start com.yse.comfyONE"\
+					\
+				
+\f2\b on
+\f1\b0  
+\f2\b error
+\f1\b0  \cf7 errMsg\cf0  \cf4 number\cf0  \cf7 errNum\cf0 \
+					
+\f2\b \cf5 display dialog
+\f1\b0 \cf0  "Erreur lors de la cr\'e9ation du fichier d'arguments ou de l'ex\'e9cution du script : " & \cf7 errMsg\cf0  & " (Num\'e9ro : " & \cf7 errNum\cf0  & ")" \cf5 buttons\cf0  \{"OK"\} \cf5 default button\cf0  "OK"\
+				
+\f2\b end
+\f1\b0  
+\f2\b try
+\f1\b0 \
+			
+\f2\b end
+\f1\b0  
+\f2\b repeat
+\f1\b0 \
+		
+\f2\b end
+\f1\b0  
+\f2\b if
+\f1\b0 \
+	
+\f2\b end
+\f1\b0  
+\f2\b tell
+\f1\b0 \
+
+\f2\b end
+\f1\b0  \cf6 GenerateVariantUsingComfyUI\cf0 \
+\
+
+\f0\i \cf2 -- Fonction pour obtenir le chemin complet de l'image
+\f1\i0 \cf0 \
+
+\f2\b on
+\f1\b0  \cf6 getIMGPath\cf0 (\cf7 outputFolder\cf0 , \cf7 imgFolder\cf0 , \cf7 outputName\cf0 , \cf7 fileExt\cf0 )\
+	
+\f2\b tell
+\f1\b0  
+\f0\i \cf4 application
+\f1\i0 \cf0  "Finder"\
+		
+\f2\b set
+\f1\b0  \cf7 imgPath\cf0  
+\f2\b to
+\f1\b0  (\cf7 outputFolder\cf0  & \cf7 imgFolder\cf0  & ":" & \cf7 outputName\cf0  & \cf7 fileExt\cf0 ) 
+\f2\b as
+\f1\b0  
+\f0\i \cf4 string
+\f1\i0 \cf0 \
+		
+\f2\b if
+\f1\b0  
+\f2\b \cf4 exists
+\f1\b0 \cf0  
+\f0\i \cf4 file
+\f1\i0 \cf0  \cf7 imgPath\cf0  
+\f2\b then
+\f1\b0 \
+			
+\f2\b set
+\f1\b0  \cf7 n\cf0  
+\f2\b to
+\f1\b0  1\
+			
+\f2\b repeat
+\f1\b0 \
+				
+\f2\b set
+\f1\b0  \cf7 newImgPath\cf0  
+\f2\b to
+\f1\b0  (\cf7 outputFolder\cf0  & \cf7 imgFolder\cf0  & ":" & \cf7 outputName\cf0  & " " & \cf7 n\cf0  & \cf7 fileExt\cf0 ) 
+\f2\b as
+\f1\b0  
+\f0\i \cf4 string
+\f1\i0 \cf0 \
+				
+\f2\b if
+\f1\b0  
+\f2\b not
+\f1\b0  (
+\f2\b \cf4 exists
+\f1\b0 \cf0  
+\f0\i \cf4 file
+\f1\i0 \cf0  \cf7 newImgPath\cf0 ) 
+\f2\b then
+\f1\b0  
+\f2\b exit
+\f1\b0  
+\f2\b repeat
+\f1\b0 \
+				
+\f2\b set
+\f1\b0  \cf7 n\cf0  
+\f2\b to
+\f1\b0  \cf7 n\cf0  + 1\
+			
+\f2\b end
+\f1\b0  
+\f2\b repeat
+\f1\b0 \
+			
+\f2\b if
+\f1\b0  \cf7 n\cf0  = 1 
+\f2\b then
+\f1\b0 \
+				
+\f2\b set
+\f1\b0  \cf7 imgPath\cf0  
+\f2\b to
+\f1\b0  (\cf7 outputFolder\cf0  & \cf7 imgFolder\cf0  & ":" & \cf7 outputName\cf0  & \cf7 fileExt\cf0 ) 
+\f2\b as
+\f1\b0  
+\f0\i \cf4 string
+\f1\i0 \cf0 \
+			
+\f2\b else
+\f1\b0 \
+				
+\f2\b set
+\f1\b0  \cf7 imgPath\cf0  
+\f2\b to
+\f1\b0  (\cf7 outputFolder\cf0  & \cf7 imgFolder\cf0  & ":" & \cf7 outputName\cf0  & " " & \cf7 n\cf0  - 1 & \cf7 fileExt\cf0 )\
+			
+\f2\b end
+\f1\b0  
+\f2\b if
+\f1\b0 \
+		
+\f2\b end
+\f1\b0  
+\f2\b if
+\f1\b0 \
+	
+\f2\b end
+\f1\b0  
+\f2\b tell
+\f1\b0 \
+	
+\f2\b \cf4 log
+\f1\b0 \cf0  "imgPath return :" & \cf7 imgPath\cf0 \
+	
+\f2\b set
+\f1\b0  \cf7 oldDelims\cf0  
+\f2\b to
+\f1\b0  \cf3 AppleScript's\cf0  \cf3 text item delimiters\cf0 \
+	
+\f2\b set
+\f1\b0  \cf3 AppleScript's\cf0  \cf3 text item delimiters\cf0  
+\f2\b to
+\f1\b0  ","\
+	
+\f2\b set
+\f1\b0  \cf7 imgPathList\cf0  
+\f2\b to
+\f1\b0  
+\f0\i \cf4 text items
+\f1\i0 \cf0  
+\f2\b of
+\f1\b0  \cf7 imgPath\cf0 \
+	
+\f2\b set
+\f1\b0  \cf3 AppleScript's\cf0  \cf3 text item delimiters\cf0  
+\f2\b to
+\f1\b0  ""\
+	
+\f2\b set
+\f1\b0  \cf7 imgPath\cf0  
+\f2\b to
+\f1\b0  \cf7 imgPathList\cf0  
+\f2\b as
+\f1\b0  
+\f0\i \cf4 string
+\f1\i0 \cf0 \
+	
+\f2\b set
+\f1\b0  \cf3 AppleScript's\cf0  \cf3 text item delimiters\cf0  
+\f2\b to
+\f1\b0  \cf7 oldDelims\cf0 \
+	
+\f2\b \cf4 log
+\f1\b0 \cf0  "*************** imgPath in function :" & \cf7 imgPath\cf0 \
+	
+\f2\b return
+\f1\b0  \cf7 imgPath\cf0 \
+
+\f2\b end
+\f1\b0  \cf6 getIMGPath\cf0 \
+\
+
+\f0\i \cf2 -- Fonction pour ajouter des param\'e8tres optionnels \'e0 la commande
+\f1\i0 \cf0 \
+
+\f2\b on
+\f1\b0  \cf6 appendCommandParameter\cf0 (\cf7 command\cf0 , \cf7 condition\cf0 , \cf7 parameterFlag\cf0 , \cf7 strengthFlag\cf0 , \cf7 strengthValue\cf0 , \cf7 startFlag\cf0 , \cf7 startValue\cf0 , \cf7 endFlag\cf0 , \cf7 endValue\cf0 , \cf7 optionalImg\cf0 )\
+	
+\f2\b if
+\f1\b0  \cf7 condition\cf0  
+\f2\b then
+\f1\b0 \
+		
+\f2\b set
+\f1\b0  \cf7 command\cf0  
+\f2\b to
+\f1\b0  \cf7 command\cf0  & " " & \cf7 parameterFlag\cf0 \
+		
+\f2\b if
+\f1\b0  \cf7 strengthFlag\cf0  
+\f2\b is not
+\f1\b0  
+\f2\b equal to
+\f1\b0  "" 
+\f2\b then
+\f1\b0 \
+			
+\f2\b set
+\f1\b0  \cf7 command\cf0  
+\f2\b to
+\f1\b0  \cf7 command\cf0  & " " & \cf7 strengthFlag\cf0  & " " & \cf7 strengthValue\cf0 \
+		
+\f2\b end
+\f1\b0  
+\f2\b if
+\f1\b0 \
+		
+\f2\b if
+\f1\b0  \cf7 startFlag\cf0  
+\f2\b is not
+\f1\b0  
+\f2\b equal to
+\f1\b0  "" 
+\f2\b then
+\f1\b0 \
+			
+\f2\b set
+\f1\b0  \cf7 command\cf0  
+\f2\b to
+\f1\b0  \cf7 command\cf0  & " " & \cf7 startFlag\cf0  & " " & \cf7 startValue\cf0 \
+		
+\f2\b end
+\f1\b0  
+\f2\b if
+\f1\b0 \
+		
+\f2\b if
+\f1\b0  \cf7 endFlag\cf0  
+\f2\b is not
+\f1\b0  
+\f2\b equal to
+\f1\b0  "" 
+\f2\b then
+\f1\b0 \
+			
+\f2\b set
+\f1\b0  \cf7 command\cf0  
+\f2\b to
+\f1\b0  \cf7 command\cf0  & " " & \cf7 endFlag\cf0  & " " & \cf7 endValue\cf0 \
+		
+\f2\b end
+\f1\b0  
+\f2\b if
+\f1\b0 \
+		
+\f2\b if
+\f1\b0  \cf7 optionalImg\cf0  
+\f2\b is
+\f1\b0  
+\f2\b not
+\f1\b0  
+\f0\i \cf4 missing value
+\f1\i0 \cf0  
+\f2\b then
+\f1\b0 \
+			
+\f2\b set
+\f1\b0  \cf7 command\cf0  
+\f2\b to
+\f1\b0  \cf7 command\cf0  & " " & \cf7 optionalImg\cf0 \
+		
+\f2\b end
+\f1\b0  
+\f2\b if
+\f1\b0 \
+	
+\f2\b end
+\f1\b0  
+\f2\b if
+\f1\b0 \
+	
+\f2\b return
+\f1\b0  \cf7 command\cf0 \
+
+\f2\b end
+\f1\b0  \cf6 appendCommandParameter\cf0 \
+\
+
+\f2\b on
+\f1\b0  \cf6 convertToPosixPath\cf0 (\cf7 macPath\cf0 )\
+	
+\f2\b set
+\f1\b0  \cf7 macPath\cf0  
+\f2\b to
+\f1\b0  \cf7 macPath\cf0  
+\f2\b as
+\f1\b0  
+\f0\i \cf4 text
+\f1\i0 \cf0 \
+	
+\f2\b set
+\f1\b0  \cf3 AppleScript's\cf0  \cf3 text item delimiters\cf0  
+\f2\b to
+\f1\b0  ":"\
+	
+\f2\b set
+\f1\b0  \cf7 pathParts\cf0  
+\f2\b to
+\f1\b0  
+\f0\i \cf4 text items
+\f1\i0 \cf0  
+\f2\b of
+\f1\b0  \cf7 macPath\cf0 \
+	
+\f2\b set
+\f1\b0  \cf3 AppleScript's\cf0  \cf3 text item delimiters\cf0  
+\f2\b to
+\f1\b0  "/"\
+	
+\f2\b set
+\f1\b0  \cf7 posixPath\cf0  
+\f2\b to
+\f1\b0  \cf7 pathParts\cf0  
+\f2\b as
+\f1\b0  
+\f0\i \cf4 string
+\f1\i0 \cf0 \
+	
+\f2\b set
+\f1\b0  \cf3 AppleScript's\cf0  \cf3 text item delimiters\cf0  
+\f2\b to
+\f1\b0  ""\
+	
+\f2\b return
+\f1\b0  "/" & \cf7 posixPath\cf0 \
+
+\f2\b end
+\f1\b0  \cf6 convertToPosixPath\cf0 \
+\
+\
+
+\f0\i \cf2 -- Appeler la fonction principale
+\f1\i0 \cf0 \
+\cf6 GenerateVariantUsingComfyUI\cf0 ()\
+}
