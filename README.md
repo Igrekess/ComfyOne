@@ -73,7 +73,7 @@ A secondary script enables **direct image generation from the Capture One window
 
 ## User Interface and Configuration
 
-Using **AppleScript’s Dialog Toolkit Plus** and **PrefsStorageLib**, this script provides a user-friendly interface within Capture One for managing inputs and saving preferences.
+Using [**AppleScript’s Dialog Toolkit Plus**](https://s3.amazonaws.com/latenightsw.com/ShaneLibs/Dialog_Toolkit.zip) and [**PrefsStorageLib**](https://s3.amazonaws.com/latenightsw.com/ShaneLibs/PrefsStorageLib_stuff.zip), this script provides a user-friendly interface within Capture One for managing inputs and saving preferences.
 
 ## Workflow Execution
 
