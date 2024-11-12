@@ -1,6 +1,6 @@
 # ComfyOne - Capture One Integration with ComfyUI API
 
-This script, **ComfyOne**, integrates the **ComfyUI API** directly within **Capture One**, offering extensive control over AI-powered image generation through a highly customizable interface. Created by Yan Senez, **ComfyOne** provides control over prompts, workflows, resolution, dual ControlNet support, IP-Adapter, and inpainting settings—all managed within Capture One. 
+This script, **ComfyOne**, integrates the **ComfyUI API** directly within **Capture One**, offering extensive control over AI-powered image generation through a highly customizable interface. **ComfyOne** provides control over prompts, workflows, resolution, dual ControlNet support, IP-Adapter, and inpainting settings—all managed within Capture One. 
 
 **Work In Progress**
 
